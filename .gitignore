@@ -3,3 +3,5 @@
 /service/target/
 /web/target/
 /.idea/
+/checkstyle.xml
+/.gitignore
