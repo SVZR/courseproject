@@ -5,3 +5,4 @@
 /.idea/
 /checkstyle.xml
 /.gitignore
+/log4j.log
