@@ -1,7 +1,5 @@
 package by.itacademy.servlet;
 
-import by.itacademy.service.CountryService;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,14 +7,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(urlPatterns = "/catalog", name = "CatalogServlet")
-public class CatalogServlet extends HttpServlet {
+@WebServlet(urlPatterns = "/search", name = "Search")
+public class SearchServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("countries", CountryService.getInstance().getAllCountries());
         getServletContext()
-                .getRequestDispatcher("/WEB-INF/jsp/catalog.jsp")
+                .getRequestDispatcher("/WEB-INF/jsp/searchForm.jsp")
                 .forward(req, resp);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        super.doPost(req, resp);
     }
 }

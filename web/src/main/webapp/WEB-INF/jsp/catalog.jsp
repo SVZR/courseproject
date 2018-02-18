@@ -4,9 +4,10 @@
 <head>
     <title>Catalog</title>
 </head>
+<%@include file="header.jsp"%>
 <body>
-<c:forEach var="country" items="${requestScope.countrynames}">
-    <p>${country.name}</p>
+<c:forEach var="country" items="${requestScope.countries}">
+    <p><a href="${pageContext.request.contextPath}/country?id=${country.id}">${country.name}</a></p>
 </c:forEach>
 </body>
 </html>

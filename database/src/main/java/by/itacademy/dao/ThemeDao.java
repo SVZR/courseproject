@@ -1,29 +1,33 @@
 package by.itacademy.dao;
 
-import by.itacademy.entity.Country;
+import by.itacademy.entity.Theme;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-public class CountryDao extends BaseDao<Country> {
+import java.util.List;
+
+public class ThemeDao extends BaseDao<Theme> {
 
     @Override
-    protected Class<Country> getEntityClass() {
-        return Country.class;
+    protected Class<Theme> getEntityClass() {
+        return Theme.class;
     }
 
-    public Country findFullInfo(long countryId) {
+    public List<Theme> findAllThemesByCountry(long countryId) {
         SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
-        Country country = session.createQuery("select c from Country c join fetch c.themes t join fetch t.series s join fetch s.coins where c.id = :countryId", Country.class)
+        List<Theme> resultList = session.createQuery("select t from Theme t "
+                + "where t.country.id = :countryId", Theme.class)
                 .setParameter("countryId", countryId)
-                .getSingleResult();
+                .getResultList();
 
         session.getTransaction().commit();
         session.close();
         sessionFactory.close();
-        return country;
+
+        return resultList;
     }
 }

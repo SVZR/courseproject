@@ -2,6 +2,7 @@ package by.itacademy.service;
 
 import by.itacademy.dao.CountryDao;
 import by.itacademy.dto.CountryDto;
+import by.itacademy.entity.Country;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,9 +25,14 @@ public final class CountryService {
     }
 
     public List<CountryDto> getAllCountries() {
-        return CountryDao.getInstance().findAll()
+        CountryDao countryDao = new CountryDao();
+        return countryDao.findAll()
                 .stream()
-                .map(country -> new CountryDto(country.getName()))
+                .map(country -> new CountryDto(country.getName(), country.getId()))
                 .collect(Collectors.toList());
+    }
+
+    public Country getCountryById(long id) {
+        return new CountryDao().findFullInfo(id);
     }
 }

@@ -5,10 +5,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.OneToMany;
-import javax.persistence.EnumType;
-import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.util.HashSet;
 import java.util.Set;
@@ -20,8 +20,14 @@ import java.util.Set;
 @Table(name = "user")
 public class User extends BaseEntity {
 
-    @Column(name = "username", nullable = false, unique = true)
-    private String username;
+    @Column(name = "firstName", nullable = false)
+    private String firstName;
+
+    @Column(name = "lastName", nullable = false)
+    private String lastName;
+
+    @Column(name = "userLogin", nullable = false, unique = true)
+    private String userLogin;
 
     @Column(name = "useremail", nullable = false, unique = true)
     private String email;
