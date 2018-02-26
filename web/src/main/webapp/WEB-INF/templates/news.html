@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>News</title>
+</head>
+<body>
+    <p th:each="newsOne : ${news}" th:text="${newsOne.getNews()}">First news</p>
+</body>
+</html>

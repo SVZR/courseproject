@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<p>MENU</p>
+<div style="max-width: 25%; margin-left: 20px">
+    <form name="search" method="get">
+        <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input type="text" class="form-control" id="firstName" placeholder="First Name" name="firstName" th:value="${searchFilter.getOrDefault('firstName', '')}">
+        </div>
+        <div class="form-group">
+            <label for="exampleFormControlSelect1">Role</label>
+            <select class="form-control" id="exampleFormControlSelect1" name="role">
+                <option value="ALL">All</option>
+                <option th:if="${searchFilter.get('role') eq roleEnt.name()}" th:each="roleEnt : ${roles}" th:value="${roleEnt.name()}" th:text="${roleEnt.name()}" selected>Role name</option>
+                <option th:if="${searchFilter.get('role') ne roleEnt.name()}" th:each="roleEnt : ${roles}" th:value="${roleEnt.name()}" th:text="${roleEnt.name()}">Role name</option>
+            </select>
+        </div>
+        <div class="form-check" th:if="${searchFilter.get('haveCollection') eq 'on'}">
+            <input class="form-check-input" type="checkbox" value="on" id="defaultCheck1" name="haveCollection" checked>
+            <label class="form-check-label" for="defaultCheck1">
+                Have collection
+            </label>
+        </div>
+        <div class="form-check" th:if="${searchFilter.get('haveCollection') ne 'on'}">
+            <input class="form-check-input" type="checkbox" value="on" id="defaultCheck2" name="haveCollection">
+            <label class="form-check-label" for="defaultCheck2">
+                Have collection
+            </label>
+        </div>
+        <div class="form-group">
+            <label for="usersOnPage">Amount users on page</label>
+            <select class="form-control" id="usersOnPage" name="amountUsersOnPage">
+                <option th:if="${amount eq searchFilter.get('amountUsersOnPage')}" th:each="amount : ${amountUsers}" th:value="${amount}" th:text="${amount}" selected>2</option>
+                <option th:if="${amount ne searchFilter.get('amountUsersOnPage')}" th:each="amount : ${amountUsers}" th:value="${amount}" th:text="${amount}">2</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary btn-sm">Search</button>
+    </form>
+</div>
+
+
+<table class="table table-striped">
+<thead>
+<tr>
+    <th scope="col">UserId</th>
+    <th scope="col">First name</th>
+    <th scope="col">Last name</th>
+    <th scope="col">Login</th>
+    <th scope="col">E-mail</th>
+    <th scope="col">User role</th>
+</tr>
+</thead>
+<tbody>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.getId()}">ID</td>
+        <td th:text="${user.getFirstName()}">firstName</td>
+        <td th:text="${user.getLastName()}">lastName</td>
+        <td th:text="${user.getUserLogin()}">userLogin</td>
+        <td th:text="${user.getEmail()}">email</td>
+        <td th:text="${user.getRole().name()}">role</td>
+    </tr>
+</tbody>
+</table>
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        <li class="page-item" th:each="page : ${pages}"><a class="page-link" href="#" th:href="@{/users(page=${page}, firstName=${searchFilter.get('firstName')}, role=${searchFilter.get('role')}, haveCollection=${searchFilter.get('haveCollection')}, amountUsersOnPage=${searchFilter.get('amountUsersOnPage')})}" th:text="${page}">1</a></li>
+    </ul>
+</nav>
+</body>
+</html>
