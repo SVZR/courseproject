@@ -10,18 +10,13 @@ import java.util.List;
 
 @Service
 @Transactional
-public class CoinServiceImpl implements CoinService {
+public class TestServiceImpl implements TestService {
 
     @Autowired
     private CoinRepository coinRepository;
 
     @Override
-    public Coin getCoinInformationAndCoinDescriptions(long coinId) {
-        return coinRepository.findCoinByIdFetchedCoinDescription(coinId);
-    }
-
-    @Override
-    public Coin getCoinById(long id) {
-        return coinRepository.findCoinById(id);
+    public List<Coin> getAllCoinsByCountryId(long countryId) {
+        return coinRepository.findCoinsByCountryId(countryId);
     }
 }

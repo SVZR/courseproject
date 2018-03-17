@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <meta charset="UTF-8">
-    <title>CoinsSite</title>
+    <title>Profile</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -14,19 +14,5 @@
 <body>
 <div th:replace="~{header :: copy}"></div>
 
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th scope="col">NEWS</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="newsBlock : ${news}">
-                <td th:text="${newsBlock.getNews()}">TEXT</td>
-            </tr>
-        </tbody>
-    </table>
-
-<a href="#" th:href="@{/test}">test page</a>
 </body>
 </html>

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
@@ -15,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-public class UserController {
+public class UserController extends BaseController {
 
     @Autowired
     private UserService userService;
@@ -32,6 +33,7 @@ public class UserController {
 
     @GetMapping(value = "/users")
     public String showUserPage(Model model, HttpServletRequest req) {
+
         Map<String, String> searchFilter = new HashMap<>();
         if (req.getParameter("firstName") != null && !req.getParameter("firstName").isEmpty()) {
             searchFilter.put("firstName", req.getParameter("firstName"));

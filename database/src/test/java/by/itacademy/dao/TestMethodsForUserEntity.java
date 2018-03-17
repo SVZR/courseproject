@@ -2,7 +2,9 @@ package by.itacademy.dao;
 
 import by.itacademy.config.TestPersistenceConfig;
 import by.itacademy.entity.Role;
+import by.itacademy.entity.Theme;
 import by.itacademy.entity.User;
+import by.itacademy.repository.ThemeRepository;
 import by.itacademy.repository.UserRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,6 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 
+import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
@@ -20,6 +23,15 @@ public class TestMethodsForUserEntity {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private ThemeRepository themeRepository;
+
+    @Test
+    public void getAllCoinsByCountryId() {
+        List<Theme> allByCountry_id = themeRepository.findAllByCountry_Id(1l);
+        allByCountry_id.forEach(theme -> System.out.println(theme.getName()));
+    }
 
     @Test
     public void testSaveUser() {
@@ -33,7 +45,7 @@ public class TestMethodsForUserEntity {
 
         User save = userRepository.save(user);
 
-        assertEquals(1, save.getId() > 0);
+        assertTrue(save.getId() > 0);
     }
 
     @Test
@@ -62,11 +74,11 @@ public class TestMethodsForUserEntity {
         User save = userRepository.save(userOne);
 
         List<User> all = (List<User>) userRepository.findAll();
-        assertEquals(5, all.size());
+        assertEquals(1, all.size());
 
         userRepository.delete(save);
 
         List<User> allNew = (List<User>) userRepository.findAll();
-        assertEquals(4, allNew.size());
+        assertEquals(0, allNew.size());
     }
 }

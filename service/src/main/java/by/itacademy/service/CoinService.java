@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface CoinService {
 
-    List<Coin> getAllCoinsByCountryId(long countryId);
+    Coin getCoinInformationAndCoinDescriptions(long coinId);
 
     Coin getCoinById(long id);
 }

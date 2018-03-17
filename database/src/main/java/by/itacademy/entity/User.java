@@ -29,10 +29,10 @@ public class User extends BaseEntity {
     @Column(name = "userLogin", nullable = false, unique = true)
     private String userLogin;
 
-    @Column(name = "useremail", nullable = false, unique = true)
+    @Column(name = "userEmail", nullable = false, unique = true)
     private String email;
 
-    @Column(name = "userpassword", nullable = false)
+    @Column(name = "userPassword", nullable = false)
     private String password;
 
     @Enumerated(EnumType.STRING)
