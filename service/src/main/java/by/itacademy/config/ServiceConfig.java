@@ -8,7 +8,9 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.persistence.EntityManagerFactory;
-
+/**
+ * @author kirylhrybouski
+ */
 @Configuration
 @EnableTransactionManagement
 @ComponentScan(basePackages = "by.itacademy.service")

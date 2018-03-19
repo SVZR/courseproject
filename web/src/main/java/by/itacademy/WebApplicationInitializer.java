@@ -6,7 +6,9 @@ import by.itacademy.config.SecurityConfig;
 import by.itacademy.config.ServiceConfig;
 import by.itacademy.config.WebConfig;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
-
+/**
+ * @author kirylhrybouski
+ */
 public class WebApplicationInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
     @Override
     protected Class<?>[] getRootConfigClasses() {

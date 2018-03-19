@@ -5,17 +5,35 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
-
+/**
+ * @author kirylhrybouski
+ */
 public interface CountryRepository extends CrudRepository<Country, Long> {
 
-    @Query("select cnt from Country cnt join fetch cnt.themes t join fetch t.series s join fetch s.coins where cnt.id = ?1")
+    String FIND_COUNTRY_BY_ID_FETCHED_TILL_COIN = "select cnt from Country cnt join fetch cnt.themes t "
+            + "join fetch t.series s join fetch s.coins where cnt.id = ?1";
+
+    String FIND_COUNTRY_BY_ID = "select c.series.theme.country from Coin c where c.series.theme.country.id = ?1";
+
+    String FIND_COUNTRY_BY_ID_AND_USER_LOGIN_FETCHED_TILL_COIN = "select cnt from Country cnt "
+            + "join fetch cnt.themes t join fetch t.series s join fetch s.coins c join c.coinDescriptions cd "
+            + "join cd.collections col join col.user u where cnt.id = ?1 and u.userLogin = ?2";
+
+    String FIND_COUNTRIES_BY_USER_LOGIN_COLLECTION = "select cnt from Country cnt join cnt.themes t "
+            + "join t.series s join s.coins c join c.coinDescriptions cd join cd.collections col join col.user u "
+            + "where u.userLogin = ?1 group by cnt.id";
+
+    @Query(FIND_COUNTRY_BY_ID_FETCHED_TILL_COIN)
     Country findCountryByIdFetchedTillCoin(long id);
 
     List<Country> findAll();
 
-    @Query("select c.series.theme.country from Coin c where c.series.theme.country.id = ?1")
+    @Query(FIND_COUNTRY_BY_ID)
     Country findCountryById(long id);
 
-//    @Query("select cnt from Country cnt join fetch cnt.themes t join fetch t.series s join fetch s.coins where cnt.id = ?1")
-//    Country findSomething(long id);
+    @Query(FIND_COUNTRY_BY_ID_AND_USER_LOGIN_FETCHED_TILL_COIN)
+    Country findCountryByIdAndUserLoginFetchedTillCoin(long countryId, String userLogin);
+
+    @Query(FIND_COUNTRIES_BY_USER_LOGIN_COLLECTION)
+    List<Country> findCountriesByUserLoginCollection(String userLogin);
 }

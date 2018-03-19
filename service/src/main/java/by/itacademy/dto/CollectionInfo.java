@@ -1,19 +1,19 @@
 package by.itacademy.dto;
 
-import by.itacademy.entity.Theme;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.List;
 /**
  * @author kirylhrybouski
  */
 @Getter
 @Setter
 @NoArgsConstructor
-public class CatalogDto {
+@AllArgsConstructor
+public class CollectionInfo {
 
-    private String countryName;
-    private List<Theme> themes;
+    private long collectionId;
+    private long coinDescriptionId;
+    private long amount;
 }

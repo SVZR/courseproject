@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
+/**
+ * @author kirylhrybouski
+ */
 @Service
 @Transactional
 public class CountryServiceImpl implements CountryService {
@@ -25,6 +27,16 @@ public class CountryServiceImpl implements CountryService {
     @Override
     public Country getCountryById(long id) {
         return countryRepository.findCountryByIdFetchedTillCoin(id);
+    }
+
+    @Override
+    public List<Country> getCountriesForCollection(String userLogin) {
+        return countryRepository.findCountriesByUserLoginCollection(userLogin);
+    }
+
+    @Override
+    public Country getCountryForCollection(long countryId, String userLogin) {
+        return countryRepository.findCountryByIdAndUserLoginFetchedTillCoin(countryId, userLogin);
     }
 }
 

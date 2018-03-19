@@ -4,8 +4,10 @@ import by.itacademy.entity.Theme;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
-
+/**
+ * @author kirylhrybouski
+ */
 public interface ThemeRepository extends CrudRepository<Theme, Long> {
 
-    List<Theme> findAllByCountry_Id(long id);
+    List<Theme> findAllByCountryId(long id);
 }

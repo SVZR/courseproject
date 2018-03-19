@@ -29,7 +29,7 @@ public class TestMethodsForUserEntity {
 
     @Test
     public void getAllCoinsByCountryId() {
-        List<Theme> allByCountry_id = themeRepository.findAllByCountry_Id(1l);
+        List<Theme> allByCountry_id = themeRepository.findAllByCountryId(1l);
         allByCountry_id.forEach(theme -> System.out.println(theme.getName()));
     }
 

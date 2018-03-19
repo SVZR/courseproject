@@ -6,7 +6,9 @@ import by.itacademy.repository.ThemeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+/**
+ * @author kirylhrybouski
+ */
 @Service
 @Transactional
 public class CatalogServiceImpl implements CatalogService {
@@ -22,7 +24,7 @@ public class CatalogServiceImpl implements CatalogService {
         CatalogDto catalogDto = new CatalogDto();
         catalogDto.setCountryName(countryRepository.findCountryById(countryId).getName());
         System.out.println(catalogDto.getCountryName());
-        catalogDto.setThemes(themeRepository.findAllByCountry_Id(countryId));
+        catalogDto.setThemes(themeRepository.findAllByCountryId(countryId));
         catalogDto.getThemes().forEach(theme -> System.out.println(theme.getName()));
         return catalogDto;
     }

@@ -7,7 +7,9 @@ import org.springframework.cache.ehcache.EhCacheManagerFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
-
+/**
+ * @author kirylhrybouski
+ */
 @Configuration
 @EnableCaching
 public class CacheConfig {

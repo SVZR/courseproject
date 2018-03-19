@@ -10,19 +10,18 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @author kirylhrybouski
  */
 @Controller
-public class CountryController {
+public class CollectionCountryController extends BaseController {
 
     private CountryService countryService;
 
     @Autowired
-    public CountryController(CountryService countryService) {
+    public CollectionCountryController(CountryService countryService) {
         this.countryService = countryService;
     }
 
-    @GetMapping("/country")
-    public String showCountryPage(Model model, @RequestParam("id") Long countryId) {
-        System.out.println("Finding country id=" + countryId);
-        model.addAttribute("country", countryService.getCountryById(countryId));
-        return "country";
+    @GetMapping("/collectionCountry")
+    public String showCountryCollectionPage(Model model, @RequestParam("countryId") long countryId) {
+        model.addAttribute("country", countryService.getCountryForCollection(countryId, getUserLogin()));
+        return "collectionCountry";
     }
 }

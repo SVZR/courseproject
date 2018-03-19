@@ -14,7 +14,9 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+/**
+ * @author kirylhrybouski
+ */
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {

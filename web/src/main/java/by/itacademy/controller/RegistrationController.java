@@ -1,7 +1,6 @@
 package by.itacademy.controller;
 
 import by.itacademy.entity.User;
-import by.itacademy.repository.UserRepository;
 import by.itacademy.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -9,15 +8,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-
+/**
+ * @author kirylhrybouski
+ */
 @Controller
 public class RegistrationController extends BaseController {
 
-    @Autowired
     private UserService userService;
 
-    @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    public RegistrationController(UserService userService, PasswordEncoder passwordEncoder) {
+        this.userService = userService;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @GetMapping("/registration")
     public String showRegistrationPage(Model model) {

@@ -5,7 +5,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
 import java.util.Map;
-
+/**
+ * @author kirylhrybouski
+ */
 public interface UserService extends UserDetailsService {
 
     List<User> getFilteredUsersOnPage(Map<String, String> searchFilter, int pageNumber, int amountOfUsersOnPage);

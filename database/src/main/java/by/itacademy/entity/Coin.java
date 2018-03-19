@@ -14,7 +14,9 @@ import javax.persistence.Table;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
-
+/**
+ * @author kirylhrybouski
+ */
 @Getter
 @Setter
 @NoArgsConstructor

@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${coin.name}">Title</title>
+    <title>Coin name</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -13,6 +13,7 @@
 </head>
 <body>
 <div th:replace="~{header :: copy}"></div>
+
 <h2 th:text="${coin.name}">Coin name</h2>
 <p style="margin-left: 10px" th:text="${'Release date: ' + coin.releaseDate}">Put into circulation on RELEASE DATE</p>
 <p style="margin-left: 10px" th:text="${'Designer: ' + coin.designer}">Designer</p>
@@ -35,24 +36,16 @@
             </ul>
         </td>
         <td sec:authorize="isAuthenticated()">
-            <div th:if="${coinsInCollection.containsKey(coinDescription.getId())}">
+            <div th:if="${coinsInCollection.containsKey(coinDescription.getId()) && coinsInCollection.get(coinDescription.getId()) != 0}">
                 <form method="post" th:action="@{/updateCoinAmount}">
                     <input type="hidden" name="coinId" th:value="${coin.getId()}">
                     <input type="number" name="amount" th:value="${coinsInCollection.get(coinDescription.getId())}" min="0">
-                    <button type="submit" name="coinDescriptionId" th:value="${coinDescription.getId()}">Save</button>
-                </form>
-            </div>
-            <div th:if="${!coinsInCollection.containsKey(coinDescription.getId())}">
-                <form method="post" th:action="@{/addCoinAmount}">
-                    <input type="hidden" name="coinId" th:value="${coin.getId()}">
-                    <input type="number" name="amount" min="0">
-                    <button type="submit" name="coinDescriptionId" th:value="${coinDescription.getId()}">Save</button>
+                    <button type="submit" name="coinDescriptionId" th:value="${coinDescription.getId()}">Update</button>
                 </form>
             </div>
         </td>
     </tr>
     </tbody>
 </table>
-<p style="margin-left: 10px" th:text="${coin.description}"></p>
 </body>
 </html>
