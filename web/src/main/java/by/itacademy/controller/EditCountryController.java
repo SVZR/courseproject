@@ -1,39 +1,53 @@
 package by.itacademy.controller;
 
-import by.itacademy.entity.Country;
-import by.itacademy.service.CountryService;
+import by.itacademy.entity.Theme;
+import by.itacademy.service.ThemeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 /**
  * @author kirylhrybouski
  */
 @Controller
+@SessionAttributes(names = "theme")
 public class EditCountryController extends BaseController {
 
-    private CountryService countryService;
+    private ThemeService themeService;
 
     @Autowired
-    public EditCountryController(CountryService countryService) {
-        this.countryService = countryService;
+    public EditCountryController(ThemeService themeService) {
+        this.themeService = themeService;
     }
 
     @GetMapping("/edit-country")
     public String showEditPage(Model model) {
-        Country country = countryService.getCountryForEdit(5L);
+        Theme theme = themeService.getTestTheme();
 //        System.out.println("id: " + country.getId() + " country name -" + country.getName());
-        model.addAttribute("country", country);
+        model.addAttribute("theme", theme);
         return "edit-country";
     }
 
     @PostMapping("/edit-country")
-    public String editCountry(Country country, Long countryId) {
-        country.setId(countryId);
-        System.out.println("id: " + country.getId() + " country name -" + country.getName());
-        countryService.editCountry(country);
+    public String editCountry(String themeName, Model model) {
+        System.out.println(themeName);
+        System.out.println(model.asMap().containsKey("theme"));
+        Theme theme = (Theme) model.asMap().get("theme");
+        System.out.println("themeId=" + theme.getId());
+        theme.setName(themeName);
+        try {
+            themeService.testSave(theme);
+        } catch (Exception e) {
+            return "optimisticLock";
+        }
         return "redirect:/edit-country";
+    }
+
+    @GetMapping("/optimistickLock")
+    public String showLockPage() {
+        return "optimisticLock";
     }
 }

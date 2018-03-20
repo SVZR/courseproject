@@ -4,10 +4,12 @@ import by.itacademy.entity.Country;
 import by.itacademy.repository.CountryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.OptimisticLockException;
 import java.util.List;
 /**
  * @author kirylhrybouski
@@ -53,8 +55,11 @@ public class CountryServiceImpl implements CountryService {
 
     @Override
     public void editCountry(Country country) {
-//        entityManagerFactory.createEntityManager().merge(country);
-        countryRepository.save(country);
+        try {
+            countryRepository.save(country);
+        } catch (ObjectOptimisticLockingFailureException ole) {
+            throw new OptimisticLockException("OptimisticLockException during update Country entity");
+        }
     }
 
     @Override

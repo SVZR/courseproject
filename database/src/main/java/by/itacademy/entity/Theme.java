@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import java.util.HashSet;
 import java.util.Set;
 /**
@@ -24,6 +25,10 @@ public class Theme extends BaseEntity {
 
     @Column(name = "name", nullable = false)
     private String name;
+
+    @Version
+    @Column(name = "version")
+    private Long version;
 
     @ManyToOne
     @JoinColumn(name = "country_id", nullable = false)

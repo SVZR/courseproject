@@ -6,9 +6,11 @@ import by.itacademy.entity.Theme;
 import by.itacademy.repository.CountryRepository;
 import by.itacademy.repository.ThemeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.OptimisticLockException;
 import java.util.List;
 
 /**
@@ -39,5 +41,19 @@ public class ThemeServiceImpl implements ThemeService {
         savingTheme.setCountry(country);
         savingTheme.setName(theme.getThemeName());
         themeRepository.save(savingTheme);
+    }
+
+    @Override
+    public Theme getTestTheme() {
+        return themeRepository.findOne(6L);
+    }
+
+    @Override
+    public void testSave(Theme theme) {
+        try {
+            themeRepository.save(theme);
+        } catch (ObjectOptimisticLockingFailureException ole) {
+            throw new OptimisticLockException("LOCKED");
+        }
     }
 }

@@ -13,4 +13,8 @@ public interface ThemeService {
     List<Theme> getAllThemes();
 
     void createNewTheme(SaveThemeDto theme);
+
+    Theme getTestTheme();
+
+    void testSave(Theme theme);
 }
