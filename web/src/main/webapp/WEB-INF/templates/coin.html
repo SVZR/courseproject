@@ -14,7 +14,7 @@
 <body>
 <div th:replace="~{header :: copy}"></div>
 <h2 th:text="${coin.name}">Coin name</h2>
-<p style="margin-left: 10px" th:text="${'Release date: ' + coin.releaseDate}">Put into circulation on RELEASE DATE</p>
+<p style="margin-left: 10px" th:text="${'Release date: ' + #temporals.format(coin.releaseDate, 'dd MMMM yyyy')}">Put into circulation on RELEASE DATE</p>
 <p style="margin-left: 10px" th:text="${'Designer: ' + coin.designer}">Designer</p>
 <p style="margin-left: 10px" th:text="${'Minted by: ' + coin.mintedBy}">Minted by</p>
 <br>
@@ -36,7 +36,7 @@
         </td>
         <td sec:authorize="isAuthenticated()">
             <div th:if="${coinsInCollection.containsKey(coinDescription.getId())}">
-                <form method="post" th:action="@{/updateCoinAmount}">
+                <form method="post" th:action="@{/updateCoinAmountCol}">
                     <input type="hidden" name="coinId" th:value="${coin.getId()}">
                     <input type="number" name="amount" th:value="${coinsInCollection.get(coinDescription.getId())}" min="0">
                     <button type="submit" name="coinDescriptionId" th:value="${coinDescription.getId()}">Save</button>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <meta charset="UTF-8">
     <title>Profile</title>
@@ -13,6 +13,32 @@
 </head>
 <body>
 <div th:replace="~{header :: copy}"></div>
-
+<h3 style="width: auto; margin: 10px auto">Profile information</h3>
+<div th:object="${user}" style="width: 600px; margin: 0 auto">
+    <label for="userLogin">Login</label>
+    <input id="userLogin" class="form-control" type="text" th:placeholder="${user.userLogin}" th:field="*{userLogin}" readonly>
+    <label for="firstName">First name</label>
+    <input id="firstName" class="form-control" type="text" th:placeholder="${user.firstName}" th:field="*{firstName}" readonly>
+    <label for="lastName">Last name</label>
+    <input id="lastName" class="form-control" type="text" th:placeholder="${user.lastName}" th:field="*{lastName}" readonly>
+    <label for="userEmail">Email</label>
+    <input id="userEmail" class="form-control" type="text" th:placeholder="${user.email}" th:field="*{email}" readonly>
+    <br>
+    <p>
+        <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+            Change password
+        </button>
+    </p>
+    <div class="collapse" id="collapseExample">
+        <div class="card card-body">
+            <form th:action="@{/updatePassword}" method="post">
+                <label for="newPassword">Enter new password</label>
+                <input id="newPassword" type="password" name="newPassword">
+                <br>
+                <button class="btn btn-secondary" type="submit">Change password</button>
+            </form>
+        </div>
+    </div>
+</div>
 </body>
 </html>

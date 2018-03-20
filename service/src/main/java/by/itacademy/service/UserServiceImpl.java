@@ -1,7 +1,9 @@
 package by.itacademy.service;
 
+import by.itacademy.dto.SearchFilterTest;
 import by.itacademy.entity.Role;
 import by.itacademy.entity.User;
+import by.itacademy.repository.CollectionRepository;
 import by.itacademy.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -21,8 +23,14 @@ import java.util.Map;
 @Transactional
 public class UserServiceImpl implements UserService {
 
-    @Autowired
     private UserRepository userRepository;
+    private CollectionRepository collectionRepository;
+
+    @Autowired
+    public UserServiceImpl(UserRepository userRepository, CollectionRepository collectionRepository) {
+        this.userRepository = userRepository;
+        this.collectionRepository = collectionRepository;
+    }
 
     public List<User> getFilteredUsersOnPage(Map<String, String> searchFilter, int pageNumber, int amountOfUsersOnPage) {
         return userRepository.findFilteredUsersOnPage(searchFilter, (pageNumber - 1) * amountOfUsersOnPage, amountOfUsersOnPage);
@@ -46,9 +54,55 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Map<Integer, Integer> getFilteredUsersAmountTest(SearchFilterTest searchFilterTest, int amountUsersOnPage) {
+        Map<String, String> searchFilter = new HashMap<>();
+        if (!searchFilterTest.getFirstName().equals("null")) {
+            searchFilter.put("firstName", searchFilterTest.getFirstName());
+        }
+        if (!searchFilterTest.getHaveCollection().equals("null")) {
+            searchFilter.put("haveCollection", searchFilterTest.getHaveCollection());
+        }
+        if (!searchFilterTest.getRole().equals("null")) {
+            searchFilter.put("role", searchFilterTest.getRole());
+        }
+        return getFilteredUsersAmount(searchFilter, searchFilterTest.getAmountUsersOnPage());
+    }
+
+    @Override
     public void saveUser(User user) {
         user.setRole(Role.USER);
         userRepository.save(user);
+    }
+
+    @Override
+    public void saveUserWithNewParams(User user) {
+        userRepository.save(user);
+    }
+
+    @Override
+    public List<User> getFilteredUsersOnPageTest(SearchFilterTest searchFilterTest, int pageNumber, int amountOfUsersOnPage) {
+        Map<String, String> searchFilter = new HashMap<>();
+        if (!searchFilterTest.getFirstName().equals("null")) {
+            searchFilter.put("firstName", searchFilterTest.getFirstName());
+        }
+        if (!searchFilterTest.getHaveCollection().equals("null")) {
+            searchFilter.put("haveCollection", searchFilterTest.getHaveCollection());
+        }
+        if (!searchFilterTest.getRole().equals("null")) {
+            searchFilter.put("role", searchFilterTest.getRole());
+        }
+        return getFilteredUsersOnPage(searchFilter, pageNumber, searchFilterTest.getAmountUsersOnPage());
+    }
+
+    @Override
+    public User getUserInformation(String userLogin) {
+        return userRepository.findUserByUserLogin(userLogin);
+    }
+
+    @Override
+    public void deleteUserByUserId(Long userId) {
+        collectionRepository.deleteCollectionsByUserId(userId);
+        userRepository.deleteById(userId);
     }
 
     @Override

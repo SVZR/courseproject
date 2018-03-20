@@ -37,10 +37,16 @@
         </td>
         <td sec:authorize="isAuthenticated()">
             <div th:if="${coinsInCollection.containsKey(coinDescription.getId()) && coinsInCollection.get(coinDescription.getId()) != 0}">
-                <form method="post" th:action="@{/updateCoinAmount}">
+                <form method="post" th:action="@{/updateCoinAmountCollection}">
                     <input type="hidden" name="coinId" th:value="${coin.getId()}">
-                    <input type="number" name="amount" th:value="${coinsInCollection.get(coinDescription.getId())}" min="0">
-                    <button type="submit" name="coinDescriptionId" th:value="${coinDescription.getId()}">Update</button>
+                    <input type="number" name="amount" placeholder="Amount" th:value="${coinsInCollection.get(coinDescription.getId())}" min="0">
+                    <button class="btn btn-secondary" type="submit" name="coinDescriptionId" th:value="${coinDescription.getId()}">Update</button>
+                </form>
+                <br>
+                <form th:action="@{/addCoinForSale}" method="post">
+                    <input type="hidden" name="coinId" th:value="${coin.getId()}">
+                    <input type="number" name="cost" placeholder="Cost">
+                    <button class="btn btn-secondary" type="submit" name="coinDescriptionId" th:value="${coinDescription.getId()}">Sale coin</button>
                 </form>
             </div>
         </td>

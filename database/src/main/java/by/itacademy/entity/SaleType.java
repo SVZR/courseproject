@@ -1,7 +1,8 @@
 package by.itacademy.entity;
+
 /**
  * @author kirylhrybouski
  */
-public enum MessageType {
-    READ, UNREAD
+public enum SaleType {
+    FORSALE, NOTFORSALE
 }

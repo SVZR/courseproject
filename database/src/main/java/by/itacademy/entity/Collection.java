@@ -6,9 +6,13 @@ import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import java.math.BigDecimal;
+
 /**
  * @author kirylhrybouski
  */
@@ -29,4 +33,11 @@ public class Collection extends BaseEntity {
 
     @Column(name = "amount", nullable = false)
     private long amount;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "sale", nullable = false)
+    private SaleType sale;
+
+    @Column(name = "cost")
+    private BigDecimal cost;
 }

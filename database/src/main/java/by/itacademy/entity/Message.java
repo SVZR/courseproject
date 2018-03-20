@@ -7,7 +7,6 @@ import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -36,8 +35,4 @@ public class Message extends BaseEntity {
 
     @Column(name = "timeStamp")
     private LocalDateTime timeStamp;
-
-    @Enumerated
-    @Column(name = "messageType")
-    private MessageType messageType;
 }

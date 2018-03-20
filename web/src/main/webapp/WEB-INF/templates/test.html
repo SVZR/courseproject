@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>test</title>
+    <title>Users</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -14,11 +14,70 @@
 <body>
 <div th:replace="~{header :: copy}"></div>
 
-<p>Test for all</p>
-<div th:each="auth : ${#authentication.authorities}">
-    <p th:text="${auth}">authority</p>
+<div style="max-width: 25%; margin-left: 20px">
+    <form name="search" method="get" th:object="${searchFilterTest}">
+        <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input type="text" class="form-control" id="firstName" placeholder="First Name" name="firstName" th:field="*{firstName}">
+        </div>
+        <div class="form-group">
+            <label for="exampleFormControlSelect1">Role</label>
+            <select class="form-control" id="exampleFormControlSelect1" name="role">
+                <option value="ALL">All</option>
+                <option th:each="roleEnt : ${roles}" th:if="${searchFilterTest.role eq roleEnt.name()}" selected th:field="*{role}" th:value="${roleEnt.name()}" th:text="${roleEnt.name()}"></option>
+                <option th:each="roleEnt : ${roles}" th:if="${searchFilterTest.role ne roleEnt.name()}" th:field="*{role}" th:value="${roleEnt.name()}" th:text="${roleEnt.name()}"></option>
+            </select>
+        </div>
+        <div class="form-check" th:if="${searchFilterTest.haveCollection eq 'on'}">
+            <input class="form-check-input" type="checkbox" value="on" id="defaultCheck1" th:field="*{haveCollection}" name="haveCollection" checked>
+            <label class="form-check-label" for="defaultCheck1">
+                Have collection
+            </label>
+        </div>
+        <div class="form-check" th:if="${searchFilterTest.haveCollection ne 'on'}">
+            <input class="form-check-input" type="checkbox" value="on" id="defaultCheck2" th:field="*{haveCollection}" name="haveCollection">
+            <label class="form-check-label" for="defaultCheck2">
+                Have collection
+            </label>
+        </div>
+        <div class="form-group">
+            <label for="usersOnPage">Amount users on page</label>
+            <select class="form-control" id="usersOnPage" name="amountUsersOnPage">
+                <option th:each="amount : ${amountUsers}" th:if="${amount eq searchFilterTest.amountUsersOnPage}" th:field="*{amountUsersOnPage}"></option>
+                <option th:each="amount : ${amountUsers}" th:if="${amount ne searchFilterTest.amountUsersOnPage}" th:field="*{amountUsersOnPage}" th:value="${amount}" th:text="${amount}"></option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary btn-sm">Search</button>
+    </form>
 </div>
-<p th:text="${#authentication.authenticated}">Test for authenticated users</p>
-<p sec:authorize="isAuthenticated()">Test for moderator</p>
+
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th scope="col">UserId</th>
+        <th scope="col">First name</th>
+        <th scope="col">Last name</th>
+        <th scope="col">Login</th>
+        <th scope="col">E-mail</th>
+        <th scope="col">User role</th>
+    </tr>
+    </thead>
+    <!--<tbody>-->
+    <!--<tr th:each="user : ${users}">-->
+        <!--<td th:text="${user.getId()}">ID</td>-->
+        <!--<td th:text="${user.getFirstName()}">firstName</td>-->
+        <!--<td th:text="${user.getLastName()}">lastName</td>-->
+        <!--<td th:text="${user.getUserLogin()}">userLogin</td>-->
+        <!--<td th:text="${user.getEmail()}">email</td>-->
+        <!--<td th:text="${user.getRole().name()}">role</td>-->
+    <!--</tr>-->
+    <!--</tbody>-->
+</table>
+<!--<nav aria-label="Page navigation example">-->
+    <!--<ul class="pagination">-->
+        <!--<li class="page-item" th:each="page : ${pages}"><a class="page-link" href="#" th:href="@{/users(page=${page}, firstName=${searchFilter.get('firstName')}, role=${searchFilter.get('role')}, haveCollection=${searchFilter.get('haveCollection')}, amountUsersOnPage=${searchFilter.get('amountUsersOnPage')})}" th:text="${page}">1</a></li>-->
+    <!--</ul>-->
+<!--</nav>-->
 </body>
 </html>

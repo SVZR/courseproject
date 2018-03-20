@@ -31,7 +31,7 @@ public class CoinController extends BaseController {
         return "coin";
     }
 
-    @PostMapping("/updateCoinAmount")
+    @PostMapping("/updateCoinAmountCol")
     public String updateCoinAmount(long amount, long coinDescriptionId, long coinId) {
         if (amount >= 0) {
             collectionService.updateAmountInCollection(coinDescriptionId, amount, getUserLogin());

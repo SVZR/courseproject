@@ -4,10 +4,13 @@ import by.itacademy.entity.News;
 import by.itacademy.service.NewsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import java.util.List;
+import java.util.Locale;
+
 /**
  * @author kirylhrybouski
  */
@@ -27,7 +30,8 @@ public class IndexController extends BaseController {
     }
 
     @GetMapping("/index")
-    public String showIndexPage() {
+    public String showIndexPage(Locale locale) {
+        System.out.println(locale);
         return "index";
     }
 }

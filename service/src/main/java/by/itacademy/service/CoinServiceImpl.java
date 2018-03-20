@@ -34,21 +34,21 @@ public class CoinServiceImpl implements CoinService {
     }
 
     @Override
-    public Coin getCoinById(long id) {
-        return coinRepository.findCoinById(id);
-    }
-
-    @Override
     public Map<Long, Long> getCollectionInfo(String userLogin, long coinId) {
-        List<Collection> collections = collectionRepository.findAllByCoinDescriptionCoinIdAndUserLogin(coinId, userLogin);
-        Map<Long, Long> test = new HashMap<>();
-        collections.forEach(col -> test.put(col.getCoinDescription().getId(), col.getAmount()));
-        return test;
+        List<Collection> collections = collectionRepository.findAllByCoinDescriptionCoinIdAndUserUserLogin(coinId, userLogin);
+        Map<Long, Long> map = new HashMap<>();
+        collections.forEach(col -> map.put(col.getCoinDescription().getId(), col.getAmount()));
+        return map;
     }
 
     @Override
     public Coin getCoinCollectionInformation(long coinId, String userLogin) {
         return coinRepository.findCoinByIdAndUserLoginInCollection(coinId, userLogin);
+    }
+
+    @Override
+    public List<Coin> getCoinsByPartName(String coinName) {
+        return coinRepository.findCoinsByNameLike("%" + coinName + "%");
     }
 
 

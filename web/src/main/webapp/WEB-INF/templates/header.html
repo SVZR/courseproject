@@ -47,14 +47,14 @@
                     <a class="dropdown-item" th:href="@{/messages}">Messages</a>
                 </div>
             </li>
-            <li class="nav-item dropdown" sec:authorize="hasAnyAuthority('ADMINISTRATOR', 'MODERATOR')">
+            <li class="nav-item dropdown" sec:authorize="hasAnyAuthority('ADMINISTRATOR') or hasAnyAuthority('MODERATOR')">
                 <a class="nav-link dropdown-toggle" href="#" th:href="@{/administration}" id="navbarAdministration"
                    role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Administration
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarProfile">
-                    <a class="dropdown-item" th:href="@{/users}">Users</a>
-                    <a class="dropdown-item" th:href="@{/addcoin}">Add coin</a>
+                    <a class="dropdown-item" th:href="@{/users}" sec:authorize="hasAnyAuthority('ADMINISTRATOR')">Users</a>
+                    <a class="dropdown-item" th:href="@{/addcoin}" sec:authorize="hasAnyAuthority('ADMINISTRATOR') or hasAnyAuthority('MODERATOR')">Add coin</a>
                 </div>
             </li>
             <li class="nav-item" sec:authorize="!isAuthenticated()">
@@ -66,8 +66,8 @@
                 </form>
             </li>
         </ul>
-        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <form class="form-inline my-2 my-lg-0" method="get" th:action="@{/search}">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search coin" aria-label="Search" name="coinName">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
     </div>

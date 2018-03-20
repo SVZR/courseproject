@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <meta charset="UTF-8">
     <title>Messages</title>
@@ -14,5 +14,63 @@
 <body>
 <div th:replace="~{header :: copy}"></div>
 
+<p>
+    <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#collapseInputMessages" aria-expanded="false" aria-controls="collapseExample">
+        Input messages
+    </button>
+    <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#collapseOutputMessages" aria-expanded="false" aria-controls="collapseExample">
+        Output messages
+    </button>
+</p>
+<div class="collapse" id="collapseInputMessages">
+    <div class="card card-body">
+        <h4>INPUT MESSAGES</h4>
+        <table class="table table-bordered">
+            <thead class="thead-light">
+            <tr>
+                <th scope="col">User</th>
+                <th scope="col">Message</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="inputMessage : ${inputMessages}">
+                <td width="300px">
+                    <p th:text="${inputMessage.fromUser.userLogin}"></p>
+                </td>
+                <td>
+                    <p th:text="${inputMessage.messageText}"></p>
+                </td>
+                <td width="300px">
+                    <a class="btn btn-secondary" role="button" th:href="@{/create-message(userLogin=${inputMessage.fromUser.userLogin})}">Answer</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="collapse" id="collapseOutputMessages">
+    <div class="card card-body">
+        <h4>OUTPUT MESSAGES</h4>
+        <table class="table table-bordered">
+            <thead class="thead-light">
+            <tr>
+                <th scope="col">User</th>
+                <th scope="col">Message</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="outputMessage : ${outputMessages}">
+                <td width="300px">
+                    <p th:text="${outputMessage.fromUser.userLogin}"></p>
+                </td>
+                <td>
+                    <p th:text="${outputMessage.messageText}"></p>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 </body>
 </html>

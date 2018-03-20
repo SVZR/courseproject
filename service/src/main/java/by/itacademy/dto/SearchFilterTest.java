@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
+
 /**
  * @author kirylhrybouski
  */
@@ -11,9 +13,11 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CollectionInfo {
+@ToString
+public class SearchFilterTest {
 
-    private long collectionId;
-    private long coinDescriptionId;
-    private long amount;
+    private String firstName;
+    private String role;
+    private String haveCollection;
+    private Integer amountUsersOnPage;
 }

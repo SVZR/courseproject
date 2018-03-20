@@ -45,7 +45,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
 
-        TypedQuery<User> query = entityManager.createQuery("select u from User u " + hqlJoinCollection(searchFilter) + hqlAddFilter(searchFilter), User.class);
+        TypedQuery<User> query = entityManager.createQuery("select u from User u " + hqlJoinCollection(searchFilter) + hqlAddFilter(searchFilter) + " group by u.id", User.class);
         setQueryParameter(searchFilter, query);
         query.setFirstResult(firstUserNumber);
         query.setMaxResults(amountUsersOnPage);
@@ -55,7 +55,6 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
         transaction.commit();
         return users;
     }
-
 
     private String hqlJoinCollection(Map<String, String> searchFilter) {
         String hql = "";

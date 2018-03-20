@@ -1,12 +1,14 @@
 package by.itacademy.controller;
 
 import by.itacademy.entity.Role;
+import by.itacademy.entity.User;
 import by.itacademy.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
@@ -63,5 +65,19 @@ public class UserController extends BaseController {
         model.addAttribute("users", userService.getFilteredUsersOnPage(searchFilter, page, amountUsersOnPage));
         model.addAttribute("pages", userService.getFilteredUsersAmount(searchFilter, amountUsersOnPage).keySet());
         return "users";
+    }
+
+    @PostMapping("/updateUserRole")
+    public String changeUserRole(String userLogin, String role) {
+        User user = userService.getUserInformation(userLogin);
+        user.setRole(Role.valueOf(role));
+        userService.saveUserWithNewParams(user);
+        return "redirect:/users";
+    }
+
+    @PostMapping("/deleteUser")
+    public String deleteUser(Long userId) {
+        userService.deleteUserByUserId(userId);
+        return "redirect:/users";
     }
 }

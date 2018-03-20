@@ -23,4 +23,9 @@ public class ServiceConfig {
         transactionManager.setEntityManagerFactory(entityManagerFactory);
         return transactionManager;
     }
+
+//    @Bean
+//    public UserServiceAspect userServiceAspect() {
+//        return new UserServiceAspect();
+//    }
 }
