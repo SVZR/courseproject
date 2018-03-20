@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import java.util.List;
+
 /**
  * @author kirylhrybouski
  */

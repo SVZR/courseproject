@@ -14,4 +14,9 @@
            eternal="false"
            timeToIdleSeconds="60"
            timeToLiveSeconds="60"/>
+    <cache name="user"
+           maxElementsInMemory="500"
+           eternal="false"
+           timeToIdleSeconds="60"
+           timeToLiveSeconds="60"/>
 </ehcache>

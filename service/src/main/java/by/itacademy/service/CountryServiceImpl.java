@@ -7,6 +7,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManagerFactory;
 import java.util.List;
 /**
  * @author kirylhrybouski
@@ -15,8 +16,14 @@ import java.util.List;
 @Transactional
 public class CountryServiceImpl implements CountryService {
 
-    @Autowired
     private CountryRepository countryRepository;
+    private EntityManagerFactory entityManagerFactory;
+
+    @Autowired
+    public CountryServiceImpl(CountryRepository countryRepository, EntityManagerFactory entityManagerFactory) {
+        this.countryRepository = countryRepository;
+        this.entityManagerFactory = entityManagerFactory;
+    }
 
     @Override
     @Cacheable(cacheNames = "countries")
@@ -37,6 +44,22 @@ public class CountryServiceImpl implements CountryService {
     @Override
     public Country getCountryForCollection(long countryId, String userLogin) {
         return countryRepository.findCountryByIdAndUserLoginFetchedTillCoin(countryId, userLogin);
+    }
+
+    @Override
+    public void createNewCountry(Country country) {
+        countryRepository.save(country);
+    }
+
+    @Override
+    public void editCountry(Country country) {
+//        entityManagerFactory.createEntityManager().merge(country);
+        countryRepository.save(country);
+    }
+
+    @Override
+    public Country getCountryForEdit(long id) {
+        return countryRepository.getCountryById(id);
     }
 }
 

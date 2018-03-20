@@ -46,14 +46,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         characterEncodingFilter.setForceEncoding(true);
         http.addFilterBefore(characterEncodingFilter, CsrfFilter.class);
 
-        http.csrf().ignoringAntMatchers("/registration");
-
         http
                 .authorizeRequests()
-                    .antMatchers("/index", "/country", "/coin" , "/sale", "/registration").permitAll()
-                    .antMatchers("/collection", "/profile", "/messages").authenticated()
-                    .antMatchers("/administration")
-                    .hasAuthority("ADMINISTRATOR")
+                    .antMatchers("/collection", "/profileinfo", "/messages").authenticated()
+                    .antMatchers("/add-coin", "/add-series", "/add-theme", "/add-country", "edit-country").hasAuthority("MODERATOR")
+                    .antMatchers("/add-coin", "/add-series", "/add-theme", "/add-country", "edit-country", "/users").hasAuthority("ADMINISTRATOR")
                 .anyRequest()
                     .permitAll()
                 .and()

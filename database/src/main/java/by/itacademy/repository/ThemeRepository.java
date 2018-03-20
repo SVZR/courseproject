@@ -10,4 +10,6 @@ import java.util.List;
 public interface ThemeRepository extends CrudRepository<Theme, Long> {
 
     List<Theme> findAllByCountryId(long id);
+
+    List<Theme> findAll();
 }

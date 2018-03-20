@@ -36,4 +36,9 @@ public interface CountryRepository extends CrudRepository<Country, Long> {
 
     @Query(FIND_COUNTRIES_BY_USER_LOGIN_COLLECTION)
     List<Country> findCountriesByUserLoginCollection(String userLogin);
+
+    Country getCountryById(long id);
+
+    @Query("update Country set name = ?1 where id = ?2")
+    void updateCountry(String countryName, long countryId);
 }

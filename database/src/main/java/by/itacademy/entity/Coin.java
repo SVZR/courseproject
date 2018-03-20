@@ -5,7 +5,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -42,9 +41,6 @@ public class Coin extends BaseEntity {
 
     @Column(name = "description", nullable = false)
     private String description;
-
-    @Embedded
-    private ImageAddress imageAddress;
 
     @OneToMany(mappedBy = "coin")
     private Set<CoinDescription> coinDescriptions = new HashSet<>();

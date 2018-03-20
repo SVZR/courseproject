@@ -1,5 +1,6 @@
 package by.itacademy.service;
 
+import by.itacademy.dto.SaveCoinDto;
 import by.itacademy.entity.Coin;
 
 import java.util.List;
@@ -16,4 +17,6 @@ public interface CoinService {
     Coin getCoinCollectionInformation(long coinId, String userLogin);
 
     List<Coin> getCoinsByPartName(String coinName);
+
+    void createNewCoin(SaveCoinDto coin);
 }
