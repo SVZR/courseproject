@@ -14,24 +14,24 @@ import org.springframework.web.bind.annotation.SessionAttributes;
  */
 @Controller
 @SessionAttributes(names = "theme")
-public class EditCountryController extends BaseController {
+public class EditThemeController extends BaseController {
 
     private ThemeService themeService;
 
     @Autowired
-    public EditCountryController(ThemeService themeService) {
+    public EditThemeController(ThemeService themeService) {
         this.themeService = themeService;
     }
 
-    @GetMapping("/edit-country")
+    @GetMapping("/edit-theme")
     public String showEditPage(Model model) {
         Theme theme = themeService.getTestTheme();
 //        System.out.println("id: " + country.getId() + " country name -" + country.getName());
         model.addAttribute("theme", theme);
-        return "edit-country";
+        return "edit-theme";
     }
 
-    @PostMapping("/edit-country")
+    @PostMapping("/edit-theme")
     public String editCountry(String themeName, Model model) {
         System.out.println(themeName);
         System.out.println(model.asMap().containsKey("theme"));
@@ -43,7 +43,7 @@ public class EditCountryController extends BaseController {
         } catch (Exception e) {
             return "optimisticLock";
         }
-        return "redirect:/edit-country";
+        return "redirect:/edit-theme";
     }
 
     @GetMapping("/optimistickLock")

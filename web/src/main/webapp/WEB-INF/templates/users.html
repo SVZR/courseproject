@@ -71,7 +71,8 @@
         <td th:text="${user.getUserLogin()}">userLogin</td>
         <td th:text="${user.getEmail()}">email</td>
         <td>
-            <form th:action="@{/updateUserRole}" method="post">
+            <p th:if="${user.userLogin eq #authentication.name}">CURRENT USER</p>
+            <form th:action="@{/updateUserRole}" method="post" th:if="${user.userLogin ne #authentication.name}">
                 <div class="form-group">
                     <select class="form-control" id="selectRoleForm" name="role">
                         <option th:each="role : ${roles}" th:if="${role.equals(user.role)}" th:value="${role}" th:text="${role}" selected>Current user role</option>
@@ -80,7 +81,7 @@
                     <button class="btn btn-secondary" name="userLogin" th:value="${user.userLogin}" type="submit">Change</button>
                 </div>
             </form>
-            <form th:action="@{/deleteUser}" method="post">
+            <form th:action="@{/deleteUser}" method="post" th:if="${user.userLogin ne #authentication.name}">
                 <button class="btn btn-secondary" name="userId" th:value="${user.getId()}" type="submit">Delete user</button>
             </form>
         </td>

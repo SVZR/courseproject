@@ -10,9 +10,6 @@ import java.util.List;
  */
 public interface CoinRepository extends CrudRepository<Coin, Long> {
 
-    @Query("select c from Coin c where c.series.theme.country.id = ?1")
-    List<Coin> findCoinsByCountryId(long id);
-
     @Query("select c from Coin c join fetch c.coinDescriptions cd join fetch cd.metal where c.id = ?1")
     Coin findCoinByIdFetchedCoinDescription(long coinId);
 

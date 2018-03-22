@@ -58,7 +58,7 @@
                     <a class="dropdown-item" th:href="@{/add-theme}" sec:authorize="hasAnyAuthority('ADMINISTRATOR') or hasAnyAuthority('MODERATOR')" th:text="#{navbar.addtheme}">Add theme</a>
                     <a class="dropdown-item" th:href="@{/add-series}" sec:authorize="hasAnyAuthority('ADMINISTRATOR') or hasAnyAuthority('MODERATOR')" th:text="#{navbar.addseries}">Add series</a>
                     <a class="dropdown-item" th:href="@{/add-coin}" sec:authorize="hasAnyAuthority('ADMINISTRATOR') or hasAnyAuthority('MODERATOR')" th:text="#{navbar.addcoin}">Add coin</a>
-                    <a class="dropdown-item" th:href="@{/edit-country}" sec:authorize="hasAnyAuthority('ADMINISTRATOR') or hasAnyAuthority('MODERATOR')" th:text="#{navbar.lock}">Optimistic lock</a>
+                    <a class="dropdown-item" th:href="@{/edit-theme}" sec:authorize="hasAnyAuthority('ADMINISTRATOR') or hasAnyAuthority('MODERATOR')" th:text="#{navbar.lock}">Optimistic lock</a>
                 </div>
             </li>
             <li class="nav-item" sec:authorize="!isAuthenticated()">
@@ -69,16 +69,6 @@
                     <button class="nav-link btn btn-link" href="#" type="submit" th:text="#{navbar.logout}">Logout</button>
                 </form>
             </li>
-            <!--<li class="nav-item dropdown">-->
-                <!--<a class="nav-link dropdown-toggle" href="#" id="navbarLocale"-->
-                   <!--role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
-                    <!--Language-->
-                <!--</a>-->
-                <!--<div class="dropdown-menu" aria-labelledby="navbarProfile">-->
-                    <!--<a class="dropdown-item" th:action="@{/setEnglishLocale}">English</a>-->
-                    <!--<a class="dropdown-item" th:action="@{/setRussianLocale}">Русский</a>-->
-                <!--</div>-->
-            <!--</li>-->
         </ul>
         <form class="form-inline my-2 my-lg-0" method="get" th:action="@{/search}">
             <input class="form-control mr-sm-2" type="search" th:placeholder="#{navbar.searchplaceholder}" aria-label="Search" name="coinName">

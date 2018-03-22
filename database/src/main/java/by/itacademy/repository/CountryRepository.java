@@ -13,8 +13,6 @@ public interface CountryRepository extends CrudRepository<Country, Long> {
     String FIND_COUNTRY_BY_ID_FETCHED_TILL_COIN = "select cnt from Country cnt join fetch cnt.themes t "
             + "join fetch t.series s join fetch s.coins where cnt.id = ?1";
 
-    String FIND_COUNTRY_BY_ID = "select c.series.theme.country from Coin c where c.series.theme.country.id = ?1";
-
     String FIND_COUNTRY_BY_ID_AND_USER_LOGIN_FETCHED_TILL_COIN = "select cnt from Country cnt "
             + "join fetch cnt.themes t join fetch t.series s join fetch s.coins c join c.coinDescriptions cd "
             + "join cd.collections col join col.user u where cnt.id = ?1 and u.userLogin = ?2";
@@ -27,9 +25,6 @@ public interface CountryRepository extends CrudRepository<Country, Long> {
     Country findCountryByIdFetchedTillCoin(long id);
 
     List<Country> findAll();
-
-    @Query(FIND_COUNTRY_BY_ID)
-    Country findCountryById(long id);
 
     @Query(FIND_COUNTRY_BY_ID_AND_USER_LOGIN_FETCHED_TILL_COIN)
     Country findCountryByIdAndUserLoginFetchedTillCoin(long countryId, String userLogin);

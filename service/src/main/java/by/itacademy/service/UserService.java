@@ -1,6 +1,5 @@
 package by.itacademy.service;
 
-import by.itacademy.dto.SearchFilterTest;
 import by.itacademy.entity.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
@@ -18,10 +17,6 @@ public interface UserService extends UserDetailsService {
     void saveUser(User user);
 
     void saveUserWithNewParams(User user);
-
-    Map<Integer, Integer> getFilteredUsersAmountTest(SearchFilterTest searchFilterTest, int amountUsersOnPage);
-
-    List<User> getFilteredUsersOnPageTest(SearchFilterTest searchFilterTest, int pageNumber, int amountOfUsersOnPage);
 
     User getUserInformation(String userLogin);
 

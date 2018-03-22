@@ -1,6 +1,5 @@
 package by.itacademy.service;
 
-import by.itacademy.dto.SearchFilterTest;
 import by.itacademy.entity.Role;
 import by.itacademy.entity.User;
 import by.itacademy.repository.CollectionRepository;
@@ -54,21 +53,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Map<Integer, Integer> getFilteredUsersAmountTest(SearchFilterTest searchFilterTest, int amountUsersOnPage) {
-        Map<String, String> searchFilter = new HashMap<>();
-        if (!searchFilterTest.getFirstName().equals("null")) {
-            searchFilter.put("firstName", searchFilterTest.getFirstName());
-        }
-        if (!searchFilterTest.getHaveCollection().equals("null")) {
-            searchFilter.put("haveCollection", searchFilterTest.getHaveCollection());
-        }
-        if (!searchFilterTest.getRole().equals("null")) {
-            searchFilter.put("role", searchFilterTest.getRole());
-        }
-        return getFilteredUsersAmount(searchFilter, searchFilterTest.getAmountUsersOnPage());
-    }
-
-    @Override
     public void saveUser(User user) {
         user.setRole(Role.USER);
         userRepository.save(user);
@@ -77,21 +61,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public void saveUserWithNewParams(User user) {
         userRepository.save(user);
-    }
-
-    @Override
-    public List<User> getFilteredUsersOnPageTest(SearchFilterTest searchFilterTest, int pageNumber, int amountOfUsersOnPage) {
-        Map<String, String> searchFilter = new HashMap<>();
-        if (!searchFilterTest.getFirstName().equals("null")) {
-            searchFilter.put("firstName", searchFilterTest.getFirstName());
-        }
-        if (!searchFilterTest.getHaveCollection().equals("null")) {
-            searchFilter.put("haveCollection", searchFilterTest.getHaveCollection());
-        }
-        if (!searchFilterTest.getRole().equals("null")) {
-            searchFilter.put("role", searchFilterTest.getRole());
-        }
-        return getFilteredUsersOnPage(searchFilter, pageNumber, searchFilterTest.getAmountUsersOnPage());
     }
 
     @Override

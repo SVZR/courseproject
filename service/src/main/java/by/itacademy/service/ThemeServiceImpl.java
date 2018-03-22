@@ -45,7 +45,8 @@ public class ThemeServiceImpl implements ThemeService {
 
     @Override
     public Theme getTestTheme() {
-        return themeRepository.findOne(6L);
+        long themeId = 6;
+        return themeRepository.findOne(themeId);
     }
 
     @Override

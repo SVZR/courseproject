@@ -53,6 +53,8 @@ public class UserController extends BaseController {
         }
         if (req.getParameter("amountUsersOnPage") != null && !req.getParameter("amountUsersOnPage").isEmpty()) {
             searchFilter.put("amountUsersOnPage", req.getParameter("amountUsersOnPage"));
+        } else {
+            searchFilter.put("amountUsersOnPage", "4");
         }
 
         model.addAttribute("searchFilter", searchFilter);
@@ -60,7 +62,7 @@ public class UserController extends BaseController {
         int page = req.getParameterMap()
                 .containsKey("page") ? Integer.valueOf(req.getParameter("page")) : 1;
         int amountUsersOnPage = req.getParameterMap()
-                .containsKey("amountUsersOnPage") ? Integer.valueOf(req.getParameter("amountUsersOnPage")) : 2;
+                .containsKey("amountUsersOnPage") ? Integer.valueOf(req.getParameter("amountUsersOnPage")) : 4;
 
         model.addAttribute("users", userService.getFilteredUsersOnPage(searchFilter, page, amountUsersOnPage));
         model.addAttribute("pages", userService.getFilteredUsersAmount(searchFilter, amountUsersOnPage).keySet());

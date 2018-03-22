@@ -48,9 +48,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
                 .authorizeRequests()
-                    .antMatchers("/collection", "/profileinfo", "/messages").authenticated()
-                    .antMatchers("/add-coin", "/add-series", "/add-theme", "/add-country", "edit-country").hasAuthority("MODERATOR")
-                    .antMatchers("/add-coin", "/add-series", "/add-theme", "/add-country", "edit-country", "/users").hasAuthority("ADMINISTRATOR")
+                    .antMatchers("/collection", "/profileinfo", "/messages")
+                        .authenticated()
+                    .antMatchers("/add-coin", "/add-series", "/add-theme", "/add-country", "edit-theme")
+                        .hasAuthority("MODERATOR")
+                    .antMatchers("/add-coin", "/add-series", "/add-theme", "/add-country", "edit-theme", "/users")
+                        .hasAuthority("ADMINISTRATOR")
                 .anyRequest()
                     .permitAll()
                 .and()

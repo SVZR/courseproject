@@ -17,8 +17,4 @@ public interface CountryService {
     Country getCountryForCollection(long countryId, String userLogin);
 
     void createNewCountry(Country country);
-
-    void editCountry(Country country);
-
-    Country getCountryForEdit(long id);
 }
