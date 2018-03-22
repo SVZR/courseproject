@@ -1,24 +1,32 @@
 package by.itacademy.controller;
 
 import by.itacademy.entity.Role;
+import by.itacademy.entity.User;
 import by.itacademy.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+/**
+ * @author kirylhrybouski
+ */
 @Controller
-public class UserController {
+public class UserController extends BaseController {
+
+    private UserService userService;
 
     @Autowired
-    private UserService userService;
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @ModelAttribute("roles")
     public Role[] getAllRoles() {
@@ -32,6 +40,7 @@ public class UserController {
 
     @GetMapping(value = "/users")
     public String showUserPage(Model model, HttpServletRequest req) {
+
         Map<String, String> searchFilter = new HashMap<>();
         if (req.getParameter("firstName") != null && !req.getParameter("firstName").isEmpty()) {
             searchFilter.put("firstName", req.getParameter("firstName"));
@@ -44,6 +53,8 @@ public class UserController {
         }
         if (req.getParameter("amountUsersOnPage") != null && !req.getParameter("amountUsersOnPage").isEmpty()) {
             searchFilter.put("amountUsersOnPage", req.getParameter("amountUsersOnPage"));
+        } else {
+            searchFilter.put("amountUsersOnPage", "4");
         }
 
         model.addAttribute("searchFilter", searchFilter);
@@ -51,10 +62,24 @@ public class UserController {
         int page = req.getParameterMap()
                 .containsKey("page") ? Integer.valueOf(req.getParameter("page")) : 1;
         int amountUsersOnPage = req.getParameterMap()
-                .containsKey("amountUsersOnPage") ? Integer.valueOf(req.getParameter("amountUsersOnPage")) : 2;
+                .containsKey("amountUsersOnPage") ? Integer.valueOf(req.getParameter("amountUsersOnPage")) : 4;
 
         model.addAttribute("users", userService.getFilteredUsersOnPage(searchFilter, page, amountUsersOnPage));
         model.addAttribute("pages", userService.getFilteredUsersAmount(searchFilter, amountUsersOnPage).keySet());
         return "users";
+    }
+
+    @PostMapping("/updateUserRole")
+    public String changeUserRole(String userLogin, String role) {
+        User user = userService.getUserInformation(userLogin);
+        user.setRole(Role.valueOf(role));
+        userService.saveUserWithNewParams(user);
+        return "redirect:/users";
+    }
+
+    @PostMapping("/deleteUser")
+    public String deleteUser(Long userId) {
+        userService.deleteUserByUserId(userId);
+        return "redirect:/users";
     }
 }

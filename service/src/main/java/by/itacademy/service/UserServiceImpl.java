@@ -1,21 +1,35 @@
 package by.itacademy.service;
 
+import by.itacademy.entity.Role;
 import by.itacademy.entity.User;
+import by.itacademy.repository.CollectionRepository;
 import by.itacademy.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+/**
+ * @author kirylhrybouski
+ */
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
 
-    @Autowired
     private UserRepository userRepository;
+    private CollectionRepository collectionRepository;
+
+    @Autowired
+    public UserServiceImpl(UserRepository userRepository, CollectionRepository collectionRepository) {
+        this.userRepository = userRepository;
+        this.collectionRepository = collectionRepository;
+    }
 
     public List<User> getFilteredUsersOnPage(Map<String, String> searchFilter, int pageNumber, int amountOfUsersOnPage) {
         return userRepository.findFilteredUsersOnPage(searchFilter, (pageNumber - 1) * amountOfUsersOnPage, amountOfUsersOnPage);
@@ -36,5 +50,37 @@ public class UserServiceImpl implements UserService {
             map.put(i, (i - 1) * amountUsersOnPage);
         }
         return map;
+    }
+
+    @Override
+    public void saveUser(User user) {
+        user.setRole(Role.USER);
+        userRepository.save(user);
+    }
+
+    @Override
+    public void saveUserWithNewParams(User user) {
+        userRepository.save(user);
+    }
+
+    @Override
+    public User getUserInformation(String userLogin) {
+        return userRepository.findUserByUserLogin(userLogin);
+    }
+
+    @Override
+    public void deleteUserByUserId(Long userId) {
+        collectionRepository.deleteCollectionsByUserId(userId);
+        userRepository.deleteById(userId);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.findUserByUserLogin(username);
+        if (user == null) {
+            throw new UsernameNotFoundException("User with login = " + username + " not found");
+        }
+        return new org.springframework.security.core.userdetails.User(username, user.getPassword(),
+                Collections.singletonList(new SimpleGrantedAuthority(user.getRole().name())));
     }
 }

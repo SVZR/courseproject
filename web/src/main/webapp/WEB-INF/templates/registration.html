@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</head>
+<body>
+<div th:replace="~{header :: copy}"></div>
+
+<h3 style="text-align: center" th:text="#{registrationform.form}">Registration form</h3>
+
+<form style="width: 600px; margin: 0 auto" method="post" th:action="@{/registration}" th:object="${user}">
+    <div class="form-group">
+        <label for="registrationFormUsername" th:text="#{registrationform.userlogin}">Login</label>
+        <input type="text" class="form-control" id="registrationFormUsername" th:placeholder="#{registrationform.userlogin}" th:field="*{userLogin}" name="userLogin">
+    </div>
+    <div class="form-group">
+        <label for="registrationFormFirstName" th:text="#{registrationform.firstname}">First name</label>
+        <input type="text" class="form-control" id="registrationFormFirstName" th:placeholder="#{registrationform.firstname}" th:field="*{firstName}" name="firstName">
+    </div>
+    <div class="form-group">
+        <label for="registrationFormLastName" th:text="#{registrationform.lastname}">Last name</label>
+        <input type="text" class="form-control" id="registrationFormLastName" th:placeholder="#{registrationform.lastname}" th:field="*{lastName}" name="lastName">
+    </div>
+    <div class="form-group">
+        <label for="exampleFormControlInput1" th:text="#{registrationform.email}">Email address</label>
+        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com" th:field="*{email}" name="email">
+    </div>
+    <div class="form-group">
+        <label for="registrationFormPassword" th:text="#{registrationform.password}">Password</label>
+        <input type="password" class="form-control" id="registrationFormPassword" th:placeholder="#{registrationform.password}" th:field="*{password}" name="password">
+    </div>
+    <button type="submit" class="btn btn-secondary" th:text="#{registrationform.registerbutton}">Register</button>
+</form>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>Coin name</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</head>
+<body>
+<div th:replace="~{header :: copy}"></div>
+
+<h2 th:text="${coin.name}">Coin name</h2>
+<p style="margin-left: 10px" th:text="${'Release date: ' + coin.releaseDate}">Put into circulation on RELEASE DATE</p>
+<p style="margin-left: 10px" th:text="${'Designer: ' + coin.designer}">Designer</p>
+<p style="margin-left: 10px" th:text="${'Minted by: ' + coin.mintedBy}">Minted by</p>
+<br>
+<table class="table">
+    <tbody>
+    <tr th:each="coinDescription : ${coin.coinDescriptions}">
+        <td width="420px">
+            <img src="#" th:src="${coinDescription.imageObverse.imageAddress}" width="170px" height="170px">
+            <img src="#" th:src="${coinDescription.imageReverse.imageAddress}" width="170px" height="170px">
+        </td>
+        <td>
+            <ul>
+                <li th:text="${'Metal: ' + coinDescription.metal.name}">Metal: Gold</li>
+                <li th:text="${'Denomination: ' + coinDescription.denomination + ' ruble'}">Denomination: 3 ruble</li>
+                <li th:text="${'Weight, g: ' + coinDescription.weight}">Weight, g: 33</li>
+                <li th:text="${'Diameter, mm: ' + coinDescription.diameter}">Diameter, mm: 33</li>
+                <li th:text="${'Mintage, pcs.: ' + coinDescription.mintage}">Mintage, pcs.: 2</li>
+            </ul>
+        </td>
+        <td sec:authorize="isAuthenticated()">
+            <div th:if="${coinsInCollection.containsKey(coinDescription.getId()) && coinsInCollection.get(coinDescription.getId()) != 0}">
+                <form method="post" th:action="@{/updateCoinAmountCollection}">
+                    <input type="hidden" name="coinId" th:value="${coin.getId()}">
+                    <input type="number" name="amount" placeholder="Amount" th:value="${coinsInCollection.get(coinDescription.getId())}" min="0">
+                    <button class="btn btn-secondary" type="submit" name="coinDescriptionId" th:value="${coinDescription.getId()}">Update</button>
+                </form>
+                <br>
+                <form th:action="@{/addCoinForSale}" method="post">
+                    <input type="hidden" name="coinId" th:value="${coin.getId()}">
+                    <input type="number" name="cost" placeholder="Cost">
+                    <button class="btn btn-secondary" type="submit" name="coinDescriptionId" th:value="${coinDescription.getId()}">Sale coin</button>
+                </form>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

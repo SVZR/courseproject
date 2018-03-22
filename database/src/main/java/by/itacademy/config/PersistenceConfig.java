@@ -3,6 +3,7 @@ package by.itacademy.config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -15,10 +16,14 @@ import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.util.Properties;
 
+/**
+ * @author kirylhrybouski
+ */
 @Configuration
 @PropertySource("classpath:database.properties")
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = "by.itacademy.repository")
+@Import(CacheConfig.class)
 public class PersistenceConfig {
     @Value("${jdbc.driver}")
     private String driverName;
@@ -38,6 +43,9 @@ public class PersistenceConfig {
     @Value("${hibernate.creation_policy}")
     private String creationPolicy;
 
+    /**
+     * @author kirylhrybouski
+     */
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
@@ -48,6 +56,9 @@ public class PersistenceConfig {
         return dataSource;
     }
 
+    /**
+     * @author kirylhrybouski
+     */
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
@@ -61,6 +72,9 @@ public class PersistenceConfig {
         return factory;
     }
 
+    /**
+     * @author kirylhrybouski
+     */
     @Bean
     public Properties jpaProperties() {
         Properties properties = new Properties();
@@ -71,6 +85,9 @@ public class PersistenceConfig {
         return properties;
     }
 
+    /**
+     * @author kirylhrybouski
+     */
     @Bean
     public JpaTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
         JpaTransactionManager transactionManager = new JpaTransactionManager();

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>Sale</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</head>
+<body>
+<div th:replace="~{header :: copy}"></div>
+<br>
+<h3>Coins for sale</h3>
+<br>
+<table class="table">
+    <tbody>
+    <tr th:each="collection : ${collections}">
+        <td width="420px">
+            <img src="#" th:src="${collection.coinDescription.imageObverse.imageAddress}" width="170px" height="170px">
+            <img src="#" th:src="${collection.coinDescription.imageReverse.imageAddress}" width="170px" height="170px">
+        </td>
+        <td>
+            <ul>
+                <a th:href="@{/coin(id=${collection.coinDescription.coin.id})}" th:text="${collection.coinDescription.coin.name}">Coin name</a>
+                <li th:text="${'Metal: ' + collection.coinDescription.metal.name}">Metal: Gold</li>
+                <li th:text="${'Denomination: ' + collection.coinDescription.denomination + ' ruble'}">Denomination: 3 ruble</li>
+                <li th:text="${'Weight, g: ' + collection.coinDescription.weight}">Weight, g: 33</li>
+                <li th:text="${'Diameter, mm: ' + collection.coinDescription.diameter}">Diameter, mm: 33</li>
+                <li th:text="${'Mintage, pcs.: ' + collection.coinDescription.mintage}">Mintage, pcs.: 2</li>
+            </ul>
+        </td>
+        <td>
+            <h3 th:text="${'Price:' + collection.cost}"></h3>
+            <h3 th:text="${'Amount: ' + collection.amount}"></h3>
+        </td>
+        <td sec:authorize="isAuthenticated()">
+            <h4 th:text="${'User:' + collection.user.userLogin}"></h4>
+            <div th:if="${collection.user.userLogin ne #authentication.name}">
+                <a role="button" class="btn btn-secondary" th:href="@{/create-message(userLogin=${collection.user.userLogin})}">Message</a>
+            </div>
+            <form th:action="@{/notForSale}" th:if="${collection.user.userLogin eq #authentication.name}" method="post">
+                <button class="btn btn-secondary" type="submit" th:value="${collection.getId()}" name="collectionId">Delete</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>Menu</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" th:fragment="copy">
+    <a class="navbar-brand" href="#" th:href="@{/index.html}">CoinSite</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="#" th:href="@{/index.html}" th:text="#{navbar.home}">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" th:href="@{/catalog}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" th:text="#{navbar.catalog}">
+                    Catalog
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" th:each="country : ${allCountries}"  th:href="@{/country(id=${country.getId()})}" th:text="${country.getName()}">Republic of Belarus</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" th:href="@{/sale}" th:text="#{navbar.sale}">Sale</a>
+            </li>
+            <li class="nav-item" sec:authorize="isAuthenticated()">
+                <a class="nav-link" href="#" th:href="@{/collection}" th:text="#{navbar.collection}">Collection</a>
+            </li>
+            <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
+                <a class="nav-link dropdown-toggle" href="#" th:href="@{/profileinfo}" id="navbarProfile"
+                   role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" th:text="#{navbar.profile}">
+                    Profile
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarProfile">
+                    <a class="dropdown-item" th:href="@{/profileinfo}" th:text="#{navbar.information}">Information</a>
+                    <a class="dropdown-item" th:href="@{/messages}" th:text="#{navbar.messages}">Messages</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown" sec:authorize="hasAnyAuthority('ADMINISTRATOR') or hasAnyAuthority('MODERATOR')">
+                <a class="nav-link dropdown-toggle" href="#" th:href="@{/administration}" id="navbarAdministration"
+                   role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" th:text="#{navbar.administration}">
+                    Administration
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarProfile">
+                    <a class="dropdown-item" th:href="@{/users}" sec:authorize="hasAnyAuthority('ADMINISTRATOR')" th:text="#{navbar.users}">Users</a>
+                    <a class="dropdown-item" th:href="@{/add-country}" sec:authorize="hasAnyAuthority('ADMINISTRATOR') or hasAnyAuthority('MODERATOR')" th:text="#{navbar.addcountry}">Add country</a>
+                    <a class="dropdown-item" th:href="@{/add-theme}" sec:authorize="hasAnyAuthority('ADMINISTRATOR') or hasAnyAuthority('MODERATOR')" th:text="#{navbar.addtheme}">Add theme</a>
+                    <a class="dropdown-item" th:href="@{/add-series}" sec:authorize="hasAnyAuthority('ADMINISTRATOR') or hasAnyAuthority('MODERATOR')" th:text="#{navbar.addseries}">Add series</a>
+                    <a class="dropdown-item" th:href="@{/add-coin}" sec:authorize="hasAnyAuthority('ADMINISTRATOR') or hasAnyAuthority('MODERATOR')" th:text="#{navbar.addcoin}">Add coin</a>
+                    <a class="dropdown-item" th:href="@{/edit-theme}" sec:authorize="hasAnyAuthority('ADMINISTRATOR') or hasAnyAuthority('MODERATOR')" th:text="#{navbar.lock}">Optimistic lock</a>
+                </div>
+            </li>
+            <li class="nav-item" sec:authorize="!isAuthenticated()">
+                <a class="nav-link" href="#" th:href="@{/login}" th:text="#{navbar.login}">Login</a>
+            </li>
+            <li class="nav-item" sec:authorize="isAuthenticated()">
+                <form th:action="@{/customLogoutUrl}" method="post">
+                    <button class="nav-link btn btn-link" href="#" type="submit" th:text="#{navbar.logout}">Logout</button>
+                </form>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0" method="get" th:action="@{/search}">
+            <input class="form-control mr-sm-2" type="search" th:placeholder="#{navbar.searchplaceholder}" aria-label="Search" name="coinName">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit" th:text="#{navbar.search}">Search</button>
+        </form>
+    </div>
+</nav>
+</body>
+</html>

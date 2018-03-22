@@ -12,7 +12,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.HashSet;
 import java.util.Set;
-
+/**
+ * @author kirylhrybouski
+ */
 @Getter
 @Setter
 @NoArgsConstructor
@@ -29,10 +31,10 @@ public class User extends BaseEntity {
     @Column(name = "userLogin", nullable = false, unique = true)
     private String userLogin;
 
-    @Column(name = "useremail", nullable = false, unique = true)
+    @Column(name = "userEmail", nullable = false, unique = true)
     private String email;
 
-    @Column(name = "userpassword", nullable = false)
+    @Column(name = "userPassword", nullable = false)
     private String password;
 
     @Enumerated(EnumType.STRING)

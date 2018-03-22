@@ -8,12 +8,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import java.util.List;
-
+/**
+ * @author kirylhrybouski
+ */
 @Controller
 public class NewsController {
 
-    @Autowired
     private NewsService newsService;
+
+    @Autowired
+    public NewsController(NewsService newsService) {
+        this.newsService = newsService;
+    }
 
     @ModelAttribute("news")
     public List<News> putAllNews() {

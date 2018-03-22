@@ -3,6 +3,7 @@ package by.itacademy.repository;
 import by.itacademy.entity.Role;
 import by.itacademy.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -10,7 +11,10 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 import java.util.List;
 import java.util.Map;
-
+/**
+ * @author kirylhrybouski
+ */
+@Repository
 public class UserRepositoryImpl implements UserRepositoryCustom {
     
     private final EntityManagerFactory entityManagerFactory;
@@ -41,7 +45,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
 
-        TypedQuery<User> query = entityManager.createQuery("select u from User u " + hqlJoinCollection(searchFilter) + hqlAddFilter(searchFilter), User.class);
+        TypedQuery<User> query = entityManager.createQuery("select u from User u " + hqlJoinCollection(searchFilter) + hqlAddFilter(searchFilter) + " group by u.id", User.class);
         setQueryParameter(searchFilter, query);
         query.setFirstResult(firstUserNumber);
         query.setMaxResults(amountUsersOnPage);
@@ -51,7 +55,6 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
         transaction.commit();
         return users;
     }
-
 
     private String hqlJoinCollection(Map<String, String> searchFilter) {
         String hql = "";

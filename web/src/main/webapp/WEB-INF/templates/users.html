@@ -1,17 +1,19 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <meta charset="UTF-8">
     <title>Users</title>
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <!-- jQuery library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <!-- Latest compiled JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </head>
 <body>
-<p>MENU</p>
+<div th:replace="~{header :: copy}"></div>
+
 <div style="max-width: 25%; margin-left: 20px">
     <form name="search" method="get">
         <div class="form-group">
@@ -45,11 +47,11 @@
                 <option th:if="${amount ne searchFilter.get('amountUsersOnPage')}" th:each="amount : ${amountUsers}" th:value="${amount}" th:text="${amount}">2</option>
             </select>
         </div>
-        <button type="submit" class="btn btn-primary btn-sm">Search</button>
+        <button type="submit" class="btn btn-secondary btn-sm">Search</button>
     </form>
 </div>
 
-
+<br>
 <table class="table table-striped">
 <thead>
 <tr>
@@ -68,7 +70,21 @@
         <td th:text="${user.getLastName()}">lastName</td>
         <td th:text="${user.getUserLogin()}">userLogin</td>
         <td th:text="${user.getEmail()}">email</td>
-        <td th:text="${user.getRole().name()}">role</td>
+        <td>
+            <p th:if="${user.userLogin eq #authentication.name}">CURRENT USER</p>
+            <form th:action="@{/updateUserRole}" method="post" th:if="${user.userLogin ne #authentication.name}">
+                <div class="form-group">
+                    <select class="form-control" id="selectRoleForm" name="role">
+                        <option th:each="role : ${roles}" th:if="${role.equals(user.role)}" th:value="${role}" th:text="${role}" selected>Current user role</option>
+                        <option th:each="role : ${roles}" th:if="${!role.equals(user.role)}" th:value="${role}" th:text="${role}">changed user role</option>
+                    </select>
+                    <button class="btn btn-secondary" name="userLogin" th:value="${user.userLogin}" type="submit">Change</button>
+                </div>
+            </form>
+            <form th:action="@{/deleteUser}" method="post" th:if="${user.userLogin ne #authentication.name}">
+                <button class="btn btn-secondary" name="userId" th:value="${user.getId()}" type="submit">Delete user</button>
+            </form>
+        </td>
     </tr>
 </tbody>
 </table>
