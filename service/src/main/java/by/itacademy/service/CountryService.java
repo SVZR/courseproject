@@ -1,5 +1,6 @@
 package by.itacademy.service;
 
+import by.itacademy.entity.Collection;
 import by.itacademy.entity.Country;
 
 import java.util.List;
