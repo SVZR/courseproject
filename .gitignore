@@ -2,6 +2,8 @@
 /database/target/
 /service/target/
 /web/target/
+/web/src/main/webapp/css/
+/web/src/main/webapp/js/
 /.idea/
 /checkstyle.xml
 /log4j.log
