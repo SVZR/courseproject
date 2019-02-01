@@ -1,5 +1,6 @@
 package by.itacademy;
 
+import by.itacademy.config.GlobalSecurityConfig;
 import by.itacademy.config.SecurityConfig;
 import by.itacademy.config.ServiceConfig;
 import by.itacademy.config.WebConfig;
@@ -18,7 +19,7 @@ public class WebApplicationInitializer extends AbstractAnnotationConfigDispatche
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class[] {ServiceConfig.class, SecurityConfig.class};
+        return new Class[] {ServiceConfig.class, SecurityConfig.class, GlobalSecurityConfig.class};
     }
 
     @Override
