@@ -1,6 +1,7 @@
 package by.itacademy.repository;
 
 import by.itacademy.entity.Coin;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
@@ -8,7 +9,7 @@ import java.util.List;
 /**
  * @author kirylhrybouski
  */
-public interface CoinRepository extends CrudRepository<Coin, Long> {
+public interface CoinRepository extends JpaRepository<Coin, Long> {
 
     @Query("select c from Coin c join fetch c.coinDescriptions cd join fetch cd.metal where c.id = ?1")
     Coin findCoinByIdFetchedCoinDescription(long coinId);

@@ -1,6 +1,7 @@
 package by.itacademy.repository;
 
 import by.itacademy.entity.Country;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
@@ -8,7 +9,7 @@ import java.util.List;
 /**
  * @author kirylhrybouski
  */
-public interface CountryRepository extends CrudRepository<Country, Long> {
+public interface CountryRepository extends JpaRepository<Country, Long> {
 
     String FIND_COUNTRY_BY_ID_FETCHED_TILL_COIN = "select cnt from Country cnt join fetch cnt.themes t "
             + "join fetch t.series s join fetch s.coins where cnt.id = ?1";
