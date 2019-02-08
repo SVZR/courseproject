@@ -15,6 +15,7 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 /**
  * @author kirylhrybouski
  */
@@ -35,7 +36,7 @@ public class CoinServiceImpl implements CoinService {
 
     @Override
     public Coin getCoinInformationAndCoinDescriptions(long coinId) {
-            return coinRepository.findCoinByIdFetchedCoinDescription(coinId);
+        return coinRepository.findCoinByIdFetchedCoinDescription(coinId);
     }
 
     @Override
