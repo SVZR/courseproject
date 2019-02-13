@@ -3,7 +3,6 @@ package by.itacademy.repository;
 import by.itacademy.entity.Collection;
 import by.itacademy.entity.SaleType;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.CrudRepository;
 
 import java.math.BigDecimal;
 import java.util.List;
